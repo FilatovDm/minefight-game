@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MINEFIGHT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="game-root">
+
+  <!-- TITLE SCREEN -->
+  <div id="screen-title" class="screen">
+    <div class="title-blocks">
+      <div style="background:#5fa632;"></div>
+      <div style="background:#8a6d3b;"></div>
+      <div style="background:#c0392b;"></div>
+      <div style="background:#5cc2ff;"></div>
+      <div style="background:#f0c419;"></div>
+    </div>
+    <h1 class="pixel-title">MINEFIGHT</h1>
+    <div class="subtitle">— A VOXEL FIGHTING GAME —</div>
+    <button class="blocky-btn accent" id="btn-start">Start</button>
+    <p style="max-width:520px; text-align:center; font-size:17px; color:var(--stone-light); margin-top:26px; padding:0 20px;">
+      Two blocky brawlers enter the arena. Best of 3 rounds. Punch, kick, block, and unleash
+      each fighter's special move to knock out your opponent.
+    </p>
+  </div>
+
+  <!-- CHARACTER SELECT -->
+  <div id="screen-select" class="screen hidden">
+    <h2 class="pixel-title">Choose Your Fighters</h2>
+    <div class="select-columns">
+      <div class="select-col">
+        <h3 class="p1-label">Player 1</h3>
+        <div class="roster-grid" id="roster-p1"></div>
+      </div>
+      <div class="select-col">
+        <h3 class="p2-label">Player 2</h3>
+        <div class="roster-grid" id="roster-p2"></div>
+        <div class="cpu-toggle">
+          <input type="checkbox" id="cpu-check" class="cpu-checkbox" checked>
+          <label for="cpu-check">CPU controls Player 2</label>
+        </div>
+      </div>
+    </div>
+    <div class="select-footer">
+      <div class="select-hint" id="select-hint">Pick a fighter for each side.</div>
+      <button class="blocky-btn accent" id="btn-fight" disabled>Fight!</button>
+    </div>
+  </div>
+
+  <!-- HUD -->
+  <div id="hud" class="hidden">
+    <div class="hud-side">
+      <div class="hud-name" id="p1-name">STEVE</div>
+      <div class="healthbar-outer"><div class="healthbar-inner" id="p1-health"></div></div>
+      <div class="round-pips" id="p1-pips"></div>
+    </div>
+    <div id="hud-center"><div id="hud-timer">60</div></div>
+    <div class="hud-side right">
+      <div class="hud-name" id="p2-name">ZOMBIE</div>
+      <div class="healthbar-outer"><div class="healthbar-inner" id="p2-health"></div></div>
+      <div class="round-pips" id="p2-pips"></div>
+    </div>
+  </div>
+
+  <div id="banner" class="pixel-title"></div>
+
+  <canvas id="arena" width="900" height="560"></canvas>
+
+  <div id="controls-hint" class="hidden">
+    P1: A/D move · W jump · S block · F punch · G kick · H special &nbsp;|&nbsp;
+    P2: ←/→ move · ↑ jump · ↓ block · J punch · K kick · L special
+  </div>
+
+  <button id="pause-btn" class="pixel-title" style="display:none;">PAUSE</button>
+  <button id="mute-btn" class="pixel-title">SOUND: ON</button>
+
+  <div id="screen-pause" class="screen hidden" style="z-index:10; background:rgba(10,15,20,0.85);">
+    <h2 class="pixel-title" style="color:var(--gold);">PAUSED</h2>
+    <div class="roundend-btns" style="margin-top:20px;">
+      <button class="blocky-btn accent" id="btn-resume">Resume</button>
+      <button class="blocky-btn" id="btn-home">Home (Portal)</button>
+    </div>
+  </div>
+
+  <!-- ROUND / MATCH END -->
+  <div id="screen-roundend" class="screen hidden">
+    <h2 id="roundend-title" class="pixel-title">ROUND 1</h2>
+    <p id="roundend-sub">Steve wins the round</p>
+    <div class="roundend-btns" id="roundend-btns"></div>
+  </div>
+
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
