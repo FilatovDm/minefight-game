@@ -144,7 +144,8 @@ const el = {
   pauseBtn: document.getElementById('pause-btn'),
   screenPause: document.getElementById('screen-pause'),
   btnResume: document.getElementById('btn-resume'),
-  btnHome: document.getElementById('btn-home')
+  btnHome: document.getElementById('btn-home'),
+  touchControls: document.getElementById('touch-controls')
 };
 const ctx = el.canvas.getContext('2d');
 
@@ -171,6 +172,29 @@ window.addEventListener('keydown', (e)=>{
 window.addEventListener('keyup', (e)=>{
   state.keys.delete(e.code);
 });
+
+// Touch controls logic
+if('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+  const tcBtns = document.querySelectorAll('.tc-btn');
+  tcBtns.forEach(btn => {
+    const code = btn.getAttribute('data-key');
+    const press = (e) => {
+      e.preventDefault();
+      if(!state.keys.has(code)) state.justPressed.add(code);
+      state.keys.add(code);
+      btn.classList.add('active');
+      ensureAudio();
+    };
+    const release = (e) => {
+      e.preventDefault();
+      state.keys.delete(code);
+      btn.classList.remove('active');
+    };
+    btn.addEventListener('touchstart', press);
+    btn.addEventListener('touchend', release);
+    btn.addEventListener('touchcancel', release);
+  });
+}
 
 /* ============================================================
    FIGHTER FACTORY
@@ -253,6 +277,7 @@ function showScreen(name){
   el.screenRoundend.classList.toggle('hidden', name!=="roundend" && name!=="matchend");
   el.hud.classList.toggle('hidden', !(name==="fighting"||name==="roundend"||name==="matchend"));
   el.controlsHint.classList.toggle('hidden', name!=="fighting");
+  el.touchControls.classList.toggle('hidden', name!=="fighting");
   el.pauseBtn.style.display = (name==="fighting") ? "block" : "none";
 }
 
